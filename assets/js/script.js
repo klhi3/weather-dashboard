@@ -1,32 +1,32 @@
-var formEl = $('#skills-form');
-var nameInputEl = $('#skill-name');
-var dateInputEl = $('#datepicker');
-var skillsListEl = $('#skills-list');
+// var formEl = $('#skills-form');
+// var nameInputEl = $('#skill-name');
+// var dateInputEl = $('#datepicker');
+// var skillsListEl = $('#skills-list');
 
-var printSkills = function (name, date) {
-  var listEl = $('<li>');
-  var listDetail = name.concat(' on ', date);
-  listEl.addClass('list-group-item').text(listDetail);
-  listEl.appendTo(skillsListEl);
-};
+// var printSkills = function (name, date) {
+//   var listEl = $('<li>');
+//   var listDetail = name.concat(' on ', date);
+//   listEl.addClass('list-group-item').text(listDetail);
+//   listEl.appendTo(skillsListEl);
+// };
 
-var handleFormSubmit = function (event) {
-  event.preventDefault();
+// var handleFormSubmit = function (event) {
+//   event.preventDefault();
 
-  var nameInput = nameInputEl.val();
-  var dateInput = dateInputEl.val();
+//   var nameInput = nameInputEl.val();
+//   var dateInput = dateInputEl.val();
 
-  if (!nameInput || !dateInput) {
-    console.log('You need to fill out the form!');
-    return;
-  }
+//   if (!nameInput || !dateInput) {
+//     console.log('You need to fill out the form!');
+//     return;
+//   }
 
-  printSkills(nameInput, dateInput);
+//   printSkills(nameInput, dateInput);
 
-  // resets form
-  nameInputEl.val('');
-  dateInputEl.val('');
-};
+//   // resets form
+//   nameInputEl.val('');
+//   dateInputEl.val('');
+// };
 
 // formEl.on('submit', handleFormSubmit);
 
@@ -36,6 +36,54 @@ var cityWeather;
 var cityContainer = document.getElementById('currentCity');
 var cityButton = document.getElementById('btn-searchCity');
 var daysList = document.getElementById('5days');
+var cityList = document.getElementById('cities');
+var cityForm = document.querySelector("#city-form");
+var cityInput = document.querySelector("#city-name");
+
+
+var cities = [];
+
+// The following function renders items in a todo list as <li> elements
+function renderCities() {
+  // Clear todoList element and update todoCountSpan
+  cityList.innerHTML = "";
+//  <button type="button" value="Austin" class="btn-sm custom-button">Austin</button> 
+   
+    // Render a new li for each city
+  for (var i = 0; i < cities.length; i++) {
+    var cityN = cities[i];
+
+    var boton = document.createElement("button");
+    boton.textContent = cityN;
+    boton.setAttribute("type", "button");
+    boton.setAttribute("value", cityN);
+    boton.setAttribute("class", "btn-sm custom-button");
+    cityList.appendChild(boton);
+  }
+}
+
+
+// This function is being called below and will run when the page loads.
+function init() {
+  // Get stored todos from localStorage
+  var storedCities = JSON.parse(localStorage.getItem("cities"));
+
+  // If todos were retrieved from localStorage, update the todos array to it
+  if (storedCities !== null) {
+    cities = storedCities;
+  }
+
+  // This is a helper function that will render todos to the DOM
+  renderCities();
+}
+
+
+function storeCities() {
+  // Stringify and set key in localStorage to todos array
+  localStorage.setItem("cities", JSON.stringify(cities));
+}
+
+
 
 
 function color_string(number) {
@@ -67,6 +115,26 @@ function renderCityHistory() {
     return;
   }
 }
+
+cityForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  var cityText = cityInput.value.trim();
+
+  // Return from function early if submitted todoText is blank
+  if (cityText === "") {
+    return;
+  }
+
+  // Add new todoText to todos array, clear the input
+  cities.push(cityText);
+  cityInput.value = "";
+
+  // Store updated todos in localStorage, re-render the list
+  getWeather(cityText);
+  storeCities();
+  renderCities();
+});
 
 function getWeather(city) {
     daysList.innerHTML = "";
@@ -177,6 +245,8 @@ function getWeather(city) {
       });
 }
 
-getWeather("New York");
+// getWeather("New York");
 
 // fetchButton.addEventListener('click', getWeather());
+
+init();
