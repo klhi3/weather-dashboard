@@ -26,7 +26,7 @@ To view this project, click [Weather Dashboard](https://klhi3.github.io/weather-
   
 ## Portfolio
 
-![](./assets/images/page.JPG)
+![](./assets/images/page.gif)
   
   
 ## Resources 
