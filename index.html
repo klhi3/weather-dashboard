@@ -11,9 +11,9 @@
   <script
   type="text/javascript"
   src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
-></script>
+  ></script>
 
-  <title>jQuery UI Interactions</title>
+  <title>Weather Dashboard</title>
 </head>
 
 <body>
@@ -23,15 +23,18 @@
     </div>
   </div>
 
+ 
   <div class="container-fluid">
     <div class="row justify-content-center">
+
+ <!-- Aside -->
       <div class="col-sm-3 custom-aside">
         <h5 class="text-left"><b>Search for a City:</b></h5>
 
-        <form id="skills-form">
+        <form id="city-form">
           <div class="form-group form-group-sm row">
-            <div class="col">
-              <input type="text" class="custom-input" id="skill-name" list="datalistOptions" />
+             <div class="col">
+              <input type="text" class="custom-input" id="city-name" list="datalistOptions" />
                     <!-- //datalist -->
                     <datalist id="datalistOptions">
                     <option value="San Francisco">
@@ -40,18 +43,24 @@
                     <option value="Los Angeles">
                     <option value="Chicago">
                     </datalist>
-            </div>
+             </div>
            </div>
+
            <div>
                <button type="submit" value="Submit" class="btn-primary btn-sm custom-submit" id="btn-searchCity">Submit</button>
            </div>
          </form>
+         
          <hr>
 
-         <div class="">
-            <button type="button" value="Austin" class="btn-sm custom-button">Austin</button>
+         <div id="cities"> 
+            <!-- <button type="button" value="Austin" class="btn-sm custom-button">Austin</button> -->
          </div>
-      </div>
+
+      </div>   
+<!-- aside end -->
+
+<!-- right side -->
       <div class="col">
           <div class="custom-single-weather" id="currentCity">
             <h3 id="single-city">Atlanta (3/30/2021) </h3>
@@ -59,12 +68,15 @@
             <p>Wind: <span id="single-wind"> 6.67</span>MPH</p>
             <p>Humidity: <span id="single-humidity"> 46</span>%</p>
             <p>UV index: <span id="single-uvindex"> 0.47</span></p>
-           </div>
-           <div class="custom-five-weather">
+          </div>
+
+          <div class="custom-five-weather">
             <h5 id="single-city">5-Day Forecast: </h5>
       
             <div class="container">
-                <div class="row">
+                <div class="row" id="5days">
+
+                  <!-- repeat 5 times -->
                   <div class="col custom-weather-sm">
                     <p>3/31/2021</p>
                     <img src="http://openweathermap.org/img/wn/10d.png" alt="weather"/>
@@ -72,44 +84,18 @@
                     <p>Wind</p>
                     <p>Humidity</p>
                   </div>
-                  <div class="col custom-weather-sm">
-                    <p>3/31/2021</p>
-                    <p>Temp:</p>
-                    <p>Wind</p>
-                    <p>Humidity</p>
-                  </div>
-                  <div class="col custom-weather-sm">
-                    <p>3/31/2021</p>
-                    <p>Temp:</p>
-                    <p>Wind</p>
-                    <p>Humidity</p>
-                  </div>
-                  <div class="col custom-weather-sm">
-                    <p>3/31/2021</p>
-                    <p>Temp:</p>
-                    <p>Wind</p>
-                    <p>Humidity</p>
-                  </div>
-                  <div class="col custom-weather-sm">
-                    <p>3/31/2021</p>
-                    <p>Temp:</p>
-                    <p>Wind</p>
-                    <p>Humidity</p>
-                  </div>
+                  <!-- repeat 5 times end -->
+
                 </div>
-              </div>
+            </div>
+          </div>
 
+       </div>
+<!-- right side end -->
+   
+   </div>
+ </div>
 
-
-
-
-           </div>
-
-        <br/>
-        <ul class="list-group" id="skills-list"></ul>
-      </div>
-    </div>
-  </div>
 </body>
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
