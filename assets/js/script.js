@@ -35,6 +35,8 @@ var handleFormSubmit = function (event) {
 var cityWeather;
 var cityContainer = document.getElementById('currentCity');
 var cityButton = document.getElementById('btn-searchCity');
+var daysList = document.getElementById('5days');
+
 
 function color_string(number) {
   if (number<=2) return "green";
@@ -67,6 +69,7 @@ function renderCityHistory() {
 }
 
 function getWeather(city) {
+    daysList.innerHTML = "";
     var cityName = city;
     var apiKey = "c812965f3b858aaacfcb1d520a8d9fa5";
 
@@ -105,12 +108,20 @@ function getWeather(city) {
 
               // var userName = document.createElement('h3');
               // var userUrl = document.createElement('p');
-              var city = document.getElementById("single-city");
+              // var city = document.getElementById("single-city");
+              document.querySelector("#single-city").textContent = city+" ("+cityWeather.date+")";
+              document.querySelector("#single-temp").textContent = cityWeather.temp;
+              document.querySelector("#single-wind").textContent = cityWeather.wind_speed;
+              document.querySelector("#single-humidity").textContent = cityWeather.humidity;
+              document.querySelector("#single-uvindex").textContent = cityWeather.uvi;
+              console.dir(document.querySelector("#single-uvindex"));
+              // document.querySelector("#single-uvindex").style.background-color = color_string(cityWeather.uvi);
 
-              userName.textContent = data[i].login;
-              userUrl.textContent = data[i].url;
-              usersContainer.append(userName);
-              usersContainer.append(userUrl);
+             
+              // userName.textContent = data[i].login;
+              // userUrl.textContent = data[i].url;
+              // usersContainer.append(userName);
+              // usersContainer.append(userUrl);
 
 
             for(var i=1; i<6; i++){
@@ -125,8 +136,41 @@ function getWeather(city) {
               };
               weatherList.push(cityWeather);
 
+              
 
+              var div = document.createElement("div");
+              div.setAttribute("class","col custom-weather-sm");
 
+              var p = document.createElement("p");
+              p.textContent = cityWeather.date;
+              div.appendChild(p);
+
+              var img = document.createElement("img");
+              var tmp = "http://openweathermap.org/img/wn/"+cityWeather.icon+".png"
+              img.setAttribute("src",tmp);
+              div.appendChild(img);
+
+              p = document.createElement("p");
+              p.textContent = "Temp: "+cityWeather.temp+" °F";
+              div.appendChild(p);
+
+              p = document.createElement("p");
+              p.textContent = "Wind: "+cityWeather.wind_speed+" MPH";
+              div.appendChild(p);
+
+              p = document.createElement("p");
+              p.textContent = "Humidity: "+cityWeather.humidity+" %";
+              div.appendChild(p);
+
+              daysList.appendChild(div);
+
+              // <div class="col custom-weather-sm">
+              //   <p>3/31/2021</p>
+              //   <img src="http://openweathermap.org/img/wn/10d.png" alt="weather"/>
+              //   <p>Temp:</p>
+              //   <p>Wind</p>
+              //   <p>Humidity</p>
+              // </div>
 
             }
           });
@@ -135,4 +179,4 @@ function getWeather(city) {
 
 getWeather("New York");
 
-fetchButton.addEventListener('click', getWeather());
+// fetchButton.addEventListener('click', getWeather());
