@@ -1,40 +1,9 @@
-// var formEl = $('#skills-form');
-// var nameInputEl = $('#skill-name');
-// var dateInputEl = $('#datepicker');
-// var skillsListEl = $('#skills-list');
-
-// var printSkills = function (name, date) {
-//   var listEl = $('<li>');
-//   var listDetail = name.concat(' on ', date);
-//   listEl.addClass('list-group-item').text(listDetail);
-//   listEl.appendTo(skillsListEl);
-// };
-
-// var handleFormSubmit = function (event) {
-//   event.preventDefault();
-
-//   var nameInput = nameInputEl.val();
-//   var dateInput = dateInputEl.val();
-
-//   if (!nameInput || !dateInput) {
-//     console.log('You need to fill out the form!');
-//     return;
-//   }
-
-//   printSkills(nameInput, dateInput);
-
-//   // resets form
-//   nameInputEl.val('');
-//   dateInputEl.val('');
-// };
-
-// formEl.on('submit', handleFormSubmit);
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var cityWeather;
 var cityContainer = document.getElementById('currentCity');
 var cityButton = document.getElementById('btn-searchCity');
+
 var daysList = document.getElementById('5days');
 var cityList = document.getElementById('cities');
 var cityForm = document.querySelector("#city-form");
@@ -58,6 +27,8 @@ function renderCities() {
     boton.setAttribute("type", "button");
     boton.setAttribute("value", cityN);
     boton.setAttribute("class", "btn-sm custom-button");
+    boton.setAttribute("id", "btn-city");
+    boton.setAttribute("data-index", i);
     cityList.appendChild(boton);
   }
 }
@@ -84,13 +55,11 @@ function storeCities() {
 }
 
 
-
-
 function color_string(number) {
-  if (number<=2) return "green";
-  else if (number<=5) return "yellow";
-  else if (number<=7) return "orange";
-  else if (number<=10) return "red";
+  if (number<=2.0) return "green";
+  else if (number<=5.0) return "yellow";
+  else if (number<=7.0) return "orange";
+  else if (number<=10.0) return "red";
   return "violet";
 }
 
@@ -98,23 +67,6 @@ function date_string(number){
   return moment.unix(number).format("M/D/YYYY");
 }
 
-
-function renderCityHistory() {
-  // Use JSON.parse() to convert text to JavaScript object
-  var cityWeathers = JSON.parse(localStorage.getItem("cityHistory"));
-  // Check if data is returned, if not exit out of the function
-  if (lastGrade !== null) {
-
-      // current
-
-
-      // document.getElementById("saved-name").innerHTML = lastGrade.student;
-      // document.getElementById("saved-grade").innerHTML = lastGrade.grade;
-      // document.getElementById("saved-comment").innerHTML = lastGrade.comment;
-  } else {
-    return;
-  }
-}
 
 cityForm.addEventListener("submit", function(event) {
   event.preventDefault();
@@ -125,15 +77,36 @@ cityForm.addEventListener("submit", function(event) {
   if (cityText === "") {
     return;
   }
+  else if (!cities.includes(cityText))
+      cities.push(cityText);
+
 
   // Add new todoText to todos array, clear the input
-  cities.push(cityText);
+  
   cityInput.value = "";
 
   // Store updated todos in localStorage, re-render the list
   getWeather(cityText);
   storeCities();
   renderCities();
+});
+
+cityList.addEventListener("click", function(event) {
+  event.preventDefault();
+
+  var element = event.target;
+
+  // Checks if element is a button
+  if (element.matches("button") === true) {
+
+    // Get its data-index value and remove the todo element from the list
+    // var index = element.parentElement.getAttribute("data-index");
+    var cTmp = element.textContent;
+
+  // Store updated todos in localStorage, re-render the list
+    getWeather(cTmp);
+  }
+
 });
 
 function getWeather(city) {
@@ -163,34 +136,25 @@ function getWeather(city) {
 
             var weatherList=[];
             var aTmp= date_string(data.current.dt);
+            
             cityWeather={
               date: aTmp,
               temp: data.current.temp,
               wind_speed: data.current.wind_speed,
               icon : data.current.weather[0].icon,
               humidity: data.current.humidity,
-              uvi: data.current.uvi,
+              uvi: data.daily[0].uvi,
             };
 
             weatherList.push(cityWeather);
 
-              // var userName = document.createElement('h3');
-              // var userUrl = document.createElement('p');
-              // var city = document.getElementById("single-city");
-              document.querySelector("#single-city").textContent = city+" ("+cityWeather.date+")";
-              document.querySelector("#single-temp").textContent = cityWeather.temp;
-              document.querySelector("#single-wind").textContent = cityWeather.wind_speed;
-              document.querySelector("#single-humidity").textContent = cityWeather.humidity;
-              document.querySelector("#single-uvindex").textContent = cityWeather.uvi;
-              console.dir(document.querySelector("#single-uvindex"));
-              // document.querySelector("#single-uvindex").style.background-color = color_string(cityWeather.uvi);
-
-             
-              // userName.textContent = data[i].login;
-              // userUrl.textContent = data[i].url;
-              // usersContainer.append(userName);
-              // usersContainer.append(userUrl);
-
+            document.querySelector("#single-city").textContent = city+" ("+cityWeather.date+")";
+            document.querySelector("#single-temp").textContent = cityWeather.temp;
+            document.querySelector("#single-wind").textContent = cityWeather.wind_speed;
+            document.querySelector("#single-humidity").textContent = cityWeather.humidity;
+            document.querySelector("#single-uvindex").textContent = cityWeather.uvi;
+            var colorTmp = "background-color:"+color_string(cityWeather.uvi);
+            document.querySelector("#single-uvindex").setAttribute("style",colorTmp);
 
             for(var i=1; i<6; i++){
               aTmp = date_string(data.daily[i].dt);
@@ -202,9 +166,7 @@ function getWeather(city) {
                       humidity: data.daily[i].humidity,
                       uvi: data.daily[i].uvi
               };
-              weatherList.push(cityWeather);
-
-              
+              weatherList.push(cityWeather);         
 
               var div = document.createElement("div");
               div.setAttribute("class","col custom-weather-sm");
