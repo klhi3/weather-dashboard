@@ -117,7 +117,7 @@ function getWeather(city) {
   var cityName = city;
   var apiKey = "c812965f3b858aaacfcb1d520a8d9fa5";
 
-  var requested_url ="http://api.openweathermap.org/data/2.5/weather?q="+cityName+"&units=imperial&appid="+apiKey;
+  var requested_url ="https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&units=imperial&appid="+apiKey;
   // api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
 
   fetch(requested_url)
