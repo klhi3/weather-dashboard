@@ -54,7 +54,7 @@ body {
 
 #single-uvindex{
     background-color: green;
-    color:white;
+    /* color:white; */
     font-size:12px;
     padding: 3px 10px 3px 10px;
     border-radius: 2px;
