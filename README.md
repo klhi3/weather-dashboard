@@ -1,6 +1,6 @@
 # Weather Dashboard
 
- to build a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS using API.
+ to build a weather dashboard that will run in the browser with local storage and feature dynamically updated HTML and CSS using API.
 
 
 ## Features
