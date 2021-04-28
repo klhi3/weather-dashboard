@@ -8,6 +8,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
   <link rel="stylesheet" href="./assets/css/style.css" />
+  <script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
+></script>
 
   <title>jQuery UI Interactions</title>
 </head>
@@ -39,24 +43,17 @@
             </div>
            </div>
            <div>
-               <button type="submit" value="Submit" class="btn-primary btn-sm custom-submit">Submit</button>
+               <button type="submit" value="Submit" class="btn-primary btn-sm custom-submit" id="btn-searchCity">Submit</button>
            </div>
          </form>
          <hr>
 
          <div class="">
             <button type="button" value="Austin" class="btn-sm custom-button">Austin</button>
-            <button type="button" value="Chicago" class="btn-sm custom-button">Chicago</button>
-            <button type="button" value="New York" class="btn-sm custom-button">New York</button>
-            <button type="button" value="Orlando" class="btn-sm custom-button">Orlando</button>
-            <button type="button" value="San Francisco" class="btn-sm custom-button">San Francisco</button>
-            <button type="button" value="Seattle" class="btn-sm custom-button">Seattle</button>
-            <button type="button" value="Denver" class="btn-sm custom-button">Denver</button>
-            <button type="button" value="Atlanta" class="btn-sm custom-button">Atlanta</button>
-          </div>
+         </div>
       </div>
       <div class="col">
-          <div class="custom-single-weather">
+          <div class="custom-single-weather" id="currentCity">
             <h3 id="single-city">Atlanta (3/30/2021) </h3>
             <p>Temp: <span id="single-temp"> 74.01</span>F</p>
             <p>Wind: <span id="single-wind"> 6.67</span>MPH</p>
@@ -70,6 +67,7 @@
                 <div class="row">
                   <div class="col custom-weather-sm">
                     <p>3/31/2021</p>
+                    <img src="http://openweathermap.org/img/wn/10d.png" alt="weather"/>
                     <p>Temp:</p>
                     <p>Wind</p>
                     <p>Humidity</p>

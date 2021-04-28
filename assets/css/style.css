@@ -7,7 +7,7 @@
   }
 
 body {
-    font-family: "Helvetica", "Gill Sans", sans-serif;
+    font-family: monospace, "Helvetica", "Gill Sans", sans-serif;
     font-size: 14px;
     letter-spacing: -1px;
 }
@@ -20,7 +20,7 @@ body {
     /* justify-content: center; */
     align-items: center;
 
-    background: linear-gradient(90deg, rgba(52,97,186,1) 0%, rgba(45,65,145,1) 35%, rgba(0,0,128,1) 100%);
+    background: linear-gradient(90deg, rgba(52,97,186,1) 0%, rgba(45,65,145,1) 35%, rgb(45, 62, 80)100%);
 }
  
 .custom-aside{
@@ -55,7 +55,7 @@ body {
 }
 
 .custom-weather-sm {
-    background-color:navy;
+    background-color:#2d3e50;
     color:white;
     border: solid 8px;
     padding: 5px;
