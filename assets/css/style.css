@@ -1,0 +1,96 @@
+:root {
+    --blue: #0c3559;
+    --darkblue: #092640;
+    --seablue: #687b8c;
+    --lightseablue: #aab9bf;
+    --light: #f2f2f2;
+  }
+
+body {
+    font-family: "Helvetica", "Gill Sans", sans-serif;
+    font-size: 14px;
+    letter-spacing: -1px;
+}
+
+.custom-head{
+    background-color: var(--darkblue);
+    height : 3rem;
+
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+
+    background: linear-gradient(90deg, rgba(52,97,186,1) 0%, rgba(45,65,145,1) 35%, rgba(0,0,128,1) 100%);
+}
+ 
+.custom-aside{
+    margin-left: 2px;
+}
+
+.custom-input{
+    width: 100%;
+}
+.custom-submit{
+    width: 100%;
+    border:none;
+}
+.custom-button{
+    width: 100%;
+    background-color:darkgrey;
+    margin: 0px 0px 16px;
+    border:none;
+}
+
+.custom-single-weather{
+    border : solid 1px;
+    margin-top: 16px;
+    padding:10px;
+}
+
+.custom-five-weather{
+    /* border-right : solid 1px; */
+    border-color: white;
+    margin-top: 16px;
+    margin-left: 0px;
+}
+
+.custom-weather-sm {
+    background-color:navy;
+    color:white;
+    border: solid 8px;
+    padding: 5px;
+}
+#title{
+    text-align:center;
+}
+
+#single-uvindex{
+    background-color: green;
+    color:white;
+    font-size:12px;
+    padding: 3px 10px 3px 10px;
+    border-radius: 2px;
+}
+
+hr{
+    border: solid 1px;
+}
+
+
+
+  
+   h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 700;
+    /* text-align: center;  */
+  }
+  
+  .byline {
+    font-weight: 200;
+    font-style: italic;
+  }
+  
