@@ -74,20 +74,14 @@ cityForm.addEventListener("submit", function(event) {
   var cityText = cityInput.value.trim();
 
   // Return from function early if submitted todoText is blank
-  if (cityText === "") {
-    return;
-  }
+  if (cityText === "") return;
   else if (!cities.includes(cityText))
       cities.push(cityText);
 
-
-  // Add new todoText to todos array, clear the input
-  
   cityInput.value = "";
 
   // Store updated todos in localStorage, re-render the list
   getWeather(cityText);
-
   storeCities();
   renderCities();
 
@@ -100,15 +94,10 @@ cityList.addEventListener("click", function(event) {
 
   // Checks if element is a button
   if (element.matches("button") === true) {
-
-    // Get its data-index value and remove the todo element from the list
     // var index = element.parentElement.getAttribute("data-index");
     var cTmp = element.textContent;
-
-  // Store updated todos in localStorage, re-render the list
     getWeather(cTmp);
   }
-
 });
 
 function getWeather(city) {
@@ -122,98 +111,105 @@ function getWeather(city) {
 
   fetch(requested_url)
             .then(function (response) {
-                return response.json();
+                if (response.status===200) {
+                   return response.json();
+                }
+                else if (response.status===404) {
+ 
+                }     
             })
             .then(function (data) {
-                console.log("ddd");
+               if (data) {
+
                 var lon = data.coord.lon;
                 var lat = data.coord.lat;
 
                 var url_index =
                 "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=hourly&units=imperial&appid="+apiKey;
                 fetch(url_index)
-                .then(function (response) {
-                  return response.json();
-                })
-                .then(function (data) {
+                      .then(function (response) {
+                            return response.json();
+                      })
+                      .then(function (data) {
 
-                  var weatherList=[];
-                  var aTmp= date_string(data.current.dt);
-                  
-                  cityWeather={
-                    date: aTmp,
-                    temp: data.current.temp,
-                    wind_speed: data.current.wind_speed,
-                    icon : data.current.weather[0].icon,
-                    humidity: data.current.humidity,
-                    uvi: data.daily[0].uvi,
-                  };
-
-                  weatherList.push(cityWeather);
-
-                  document.querySelector("#single-city").textContent = city+" ("+cityWeather.date+")";
-                  document.querySelector("#single-temp").textContent = cityWeather.temp;
-                  document.querySelector("#single-wind").textContent = cityWeather.wind_speed;
-                  document.querySelector("#single-humidity").textContent = cityWeather.humidity;
-                  document.querySelector("#single-uvindex").textContent = cityWeather.uvi;
-                  var colorTmp = "background-color:"+color_string(cityWeather.uvi);
-                  document.querySelector("#single-uvindex").setAttribute("style",colorTmp);
-
-                  for(var i=1; i<6; i++){
-                    aTmp = date_string(data.daily[i].dt);
-                    cityWeather ={
+                          var weatherList=[];
+                          var aTmp= date_string(data.current.dt);
+                          
+                          cityWeather={
                             date: aTmp,
-                            temp: data.daily[i].temp.min,
-                            wind_speed: data.daily[i].wind_speed,
-                            icon : data.daily[i].weather[0].icon,
-                            humidity: data.daily[i].humidity,
-                            uvi: data.daily[i].uvi
-                    };
-                    weatherList.push(cityWeather);         
+                            temp: data.current.temp,
+                            wind_speed: data.current.wind_speed,
+                            icon : data.current.weather[0].icon,
+                            humidity: data.current.humidity,
+                            uvi: data.daily[0].uvi,
+                          };
 
-                    var div = document.createElement("div");
-                    div.setAttribute("class","col custom-weather-sm");
+                          weatherList.push(cityWeather);
 
-                    var p = document.createElement("p");
-                    p.textContent = cityWeather.date;
-                    div.appendChild(p);
+                          document.querySelector("#single-city").textContent = city+" ("+cityWeather.date+")";
+                          document.querySelector("#single-temp").textContent = cityWeather.temp;
+                          document.querySelector("#single-wind").textContent = cityWeather.wind_speed;
+                          document.querySelector("#single-humidity").textContent = cityWeather.humidity;
+                          document.querySelector("#single-uvindex").textContent = cityWeather.uvi;
+                          var colorTmp = "background-color:"+color_string(cityWeather.uvi);
+                          document.querySelector("#single-uvindex").setAttribute("style",colorTmp);
 
-                    var img = document.createElement("img");
-                    var tmp = "http://openweathermap.org/img/wn/"+cityWeather.icon+".png"
-                    img.setAttribute("src",tmp);
-                    div.appendChild(img);
+                          for(var i=1; i<6; i++){
+                              aTmp = date_string(data.daily[i].dt);
+                              cityWeather ={
+                                      date: aTmp,
+                                      temp: data.daily[i].temp.min,
+                                      wind_speed: data.daily[i].wind_speed,
+                                      icon : data.daily[i].weather[0].icon,
+                                      humidity: data.daily[i].humidity,
+                                      uvi: data.daily[i].uvi
+                              };
+                              weatherList.push(cityWeather);         
 
-                    p = document.createElement("p");
-                    p.textContent = "Temp: "+cityWeather.temp+" °F";
-                    div.appendChild(p);
+                              var div = document.createElement("div");
+                              div.setAttribute("class","col custom-weather-sm");
 
-                    p = document.createElement("p");
-                    p.textContent = "Wind: "+cityWeather.wind_speed+" MPH";
-                    div.appendChild(p);
+                              var p = document.createElement("p");
+                              p.textContent = cityWeather.date;
+                              div.appendChild(p);
 
-                    p = document.createElement("p");
-                    p.textContent = "Humidity: "+cityWeather.humidity+" %";
-                    div.appendChild(p);
+                              var img = document.createElement("img");
+                              var tmp = "http://openweathermap.org/img/wn/"+cityWeather.icon+".png"
+                              img.setAttribute("src",tmp);
+                              div.appendChild(img);
 
-                    daysList.appendChild(div);
+                              p = document.createElement("p");
+                              p.textContent = "Temp: "+cityWeather.temp+" °F";
+                              div.appendChild(p);
 
-                    // <div class="col custom-weather-sm">
-                    //   <p>3/31/2021</p>
-                    //   <img src="http://openweathermap.org/img/wn/10d.png" alt="weather"/>
-                    //   <p>Temp:</p>
-                    //   <p>Wind</p>
-                    //   <p>Humidity</p>
-                    // </div>
-                  }
-                });
-          })    
+                              p = document.createElement("p");
+                              p.textContent = "Wind: "+cityWeather.wind_speed+" MPH";
+                              div.appendChild(p);
+
+                              p = document.createElement("p");
+                              p.textContent = "Humidity: "+cityWeather.humidity+" %";
+                              div.appendChild(p);
+
+                              daysList.appendChild(div);
+
+                              // <div class="col custom-weather-sm">
+                              //   <p>3/31/2021</p>
+                              //   <img src="http://openweathermap.org/img/wn/10d.png" alt="weather"/>
+                              //   <p>Temp:</p>
+                              //   <p>Wind</p>
+                              //   <p>Humidity</p>
+                              // </div>
+                            }
+                      });
+              // if (data)
+               }
+            // then
+             })    
           .catch(function(error) {
 
-            console.log(error);
+               console.log("catch error:"+error);
           
-       });
-    
-
+          });
 }
 
 
